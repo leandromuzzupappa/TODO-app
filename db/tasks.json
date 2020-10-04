@@ -22,5 +22,10 @@
         "name": "rever la clase del jueves",
         "deadline": "02/10/2020",
         "done": false
+    },
+    {
+        "name": "Estudiar SCRUM",
+        "deadline": "02/10/2020",
+        "done": false
     }
 ]

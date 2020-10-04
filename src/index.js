@@ -17,9 +17,9 @@ TODO APP
     -- [x] Show done
     -- [x] Show pending 
 
-    [] Search 
-    -- [] Dates
-    -- [] Keywords or text
+    [x] Search 
+    -- [x] Dates
+    -- [x] Keywords or text
 
     [] Sort
     -- [] by date
@@ -27,6 +27,7 @@ TODO APP
 
 const fs = require('fs');
 const path = require('path');
+const utils = require('./utils');
 
 // Helpers
 const getAbsolutePath = (filePath) => {
@@ -40,84 +41,32 @@ const tasksJSON = fs.readFileSync(tasksFile, {
 });
 const tasks = JSON.parse(tasksJSON);
 
-// SHOW
-// Show all
-const showAll = () => {
-    tasks.forEach(task => {
-        let doneText = task.done ? "Done" : "Pending";
-        console.log(`- [${doneText}] ${task.name} (${task.deadline})`);
-    })
-}
-
-// Show done
-const showDone = () => {
-    tasks.forEach(task => {
-        if (task.done) {
-            console.log(`- [Done] ${task.name} (${task.deadline})`);
-        }
-    })
-}
-
-// Show pending
-const showPending = () => {
-    tasks.forEach(task => {
-        if (!task.done) {
-            console.log(`- [Pending] ${task.name} (${task.deadline})`);
-        }
-    })
-}
-
-// SEARCH
-// Keywords
-const searchContent = (text) => {
-    let _text = text.toLowerCase();
-    tasks.forEach(task => {
-        let _task = task.name.toLowerCase();
-        if (_task.indexOf(_text) > -1) {
-            let doneText = task.done ? "Done" : "Pending";
-            console.log(`- [${doneText}] ${task.name} (${task.deadline})`);
-        }
-    })
-}
-
-// Date
-const searchDate = (date) => {
-    let _date = date;
-    tasks.forEach(task => {
-        let deadline = task.deadline;
-        if (deadline.indexOf(_date) > -1) {
-            let doneText = task.done ? "Done" : "Pending";
-            console.log(`- [${doneText}] ${task.name} (${task.deadline})`);
-        }
-    })
-}
-
 // Getting params from terminal
 const params = process.argv;
 params.shift();
 params.shift();
 
 switch (params[0]) {
+    // FILTER
     case 'all':
-        showAll();
+        utils.showAll(tasks);
         break;
 
     case 'done':
-        showDone();
+        utils.showDone(tasks);
         break;
 
     case 'pending':
-        showPending();
+        utils.showPending(tasks);
         break;
 
+        // SEARCH
     case 'search':
-        if (params[2] == '--content') {
-            searchContent(params[1]);
-        } else if (params[2] == '--date') {
-            searchDate(params[1]);
-        } else if (params[2] === undefined) {
+        if (params[2] === undefined) {
             console.log('You must to pass --content or --date');
+            break;
         }
+        utils.search(tasks, params);
         break;
 
     default:
