@@ -63,7 +63,7 @@ const utils = {
         let [, taskIndex, newContent] = params;
         tasks[taskIndex].name = newContent;
 
-        console.log('Saving...')
+        console.log('Saving...');
         save(tasks);
 
         console.log('-- Task Updated!  \n\r');
@@ -78,13 +78,53 @@ const utils = {
         console.log('Saving...')
         save(tasks);
 
-        setTimeout(() => {
-            console.log('-- Task Updated!  \n\r');
-            console.log(utils.showAll(tasks));
-        }, 750);
+        console.log('-- Task Updated!  \n\r');
+        console.log(utils.showAll(tasks));
     },
 
+    // ADD - REMOVE
+    addNew: (tasks, params, save) => {
+        let [, name, deadline] = params;
+        const newTask = {
+            name: name,
+            deadline: deadline,
+            done: false,
+        }
+        tasks.push(newTask);
 
+        console.log('Saving...')
+        save(tasks);
+
+        console.log('-- Task added!  \n\r');
+        console.log(utils.showAll(tasks));
+
+    },
+    delete: (tasks, params, save) => {
+        let [, taskIndex, isConfirmed] = params;
+
+        if (taskIndex === 'all' && isConfirmed === undefined) {
+            console.log('You are about to delete all your tasks, to confirm run the following command');
+            console.log('node ./src/index.js delete all --true');
+
+            return;
+        }
+
+        if (isConfirmed == '--true') {
+            save([]);
+            console.log('All tasks have been deleted');
+
+            return;
+        }
+
+        tasks.splice(taskIndex);
+
+        console.log('Saving...')
+        save(tasks);
+
+        console.log('-- Task deleted!  \n\r');
+        console.log(utils.showAll(tasks));
+
+    },
 
 }
 

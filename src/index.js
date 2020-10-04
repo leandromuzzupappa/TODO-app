@@ -62,7 +62,7 @@ switch (params[0]) {
         utils.showPending(tasks);
         break;
 
-    // SEARCH
+        // SEARCH
     case 'search':
         if (params[2] === undefined) {
             console.log('You must to pass --content or --date');
@@ -71,18 +71,24 @@ switch (params[0]) {
         utils.search(tasks, params);
         break;
 
-    // EDIT
+        // EDIT
     case 'toggle':
         utils.modifyStatus(tasks, params, saveTask);
         break;
     case 'edit-content':
         utils.modifyContent(tasks, params, saveTask);
         break;
-    case 'edit-deadline':
+    case 'edit-date':
         utils.modifyDeadline(tasks, params, saveTask);
         break;
 
-
+        // ADD - DELETE
+    case 'add':
+        utils.addNew(tasks, params, saveTask);
+        break;
+    case 'delete':
+        utils.delete(tasks, params, saveTask);
+        break;
 
     default:
         console.log('default');
