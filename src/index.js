@@ -55,17 +55,14 @@ switch (params[0]) {
     case 'all':
         utils.showAll(tasks);
         break;
-
     case 'done':
         utils.showDone(tasks);
         break;
-
     case 'pending':
         utils.showPending(tasks);
         break;
 
-
-        // SEARCH
+    // SEARCH
     case 'search':
         if (params[2] === undefined) {
             console.log('You must to pass --content or --date');
@@ -74,10 +71,15 @@ switch (params[0]) {
         utils.search(tasks, params);
         break;
 
-
-        // EDIT
+    // EDIT
     case 'toggle':
         utils.modifyStatus(tasks, params, saveTask);
+        break;
+    case 'edit-content':
+        utils.modifyContent(tasks, params, saveTask);
+        break;
+    case 'edit-deadline':
+        utils.modifyDeadline(tasks, params, saveTask);
         break;
 
 

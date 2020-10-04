@@ -52,12 +52,36 @@ const utils = {
         const task = tasks[taskIndex];
         task.done = !task.done;
 
-        console.log('Guardando...')
+        console.log('Saving...')
         save(tasks);
 
-        console.log('-- Tarea modificada!  \n\r');
+        console.log('-- Task Updated!  \n\r');
         console.log(utils.showAll(tasks)); // Shows all current tasks
 
+    },
+    modifyContent: (tasks, params, save) => {
+        let [, taskIndex, newContent] = params;
+        tasks[taskIndex].name = newContent;
+
+        console.log('Saving...')
+        save(tasks);
+
+        console.log('-- Task Updated!  \n\r');
+        console.log(utils.showAll(tasks));
+
+    },
+    modifyDeadline: (tasks, params, save) => {
+        let [, taskIndex, newDeadline] = params;
+
+        tasks[taskIndex].deadline = newDeadline;
+
+        console.log('Saving...')
+        save(tasks);
+
+        setTimeout(() => {
+            console.log('-- Task Updated!  \n\r');
+            console.log(utils.showAll(tasks));
+        }, 750);
     },
 
 
