@@ -45,6 +45,23 @@ const utils = {
         counter == 0 ? console.log('-- There are no results.') : '';
     },
 
+    // EDIT
+    modifyStatus: (tasks, params, save) => {
+        let [, taskIndex] = params;
+
+        const task = tasks[taskIndex];
+        task.done = !task.done;
+
+        console.log('Guardando...')
+        save(tasks);
+
+        console.log('-- Tarea modificada!  \n\r');
+        console.log(utils.showAll(tasks)); // Shows all current tasks
+
+    },
+
+
+
 }
 
 

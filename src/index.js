@@ -6,7 +6,7 @@ TODO APP
     -- [] Delete only done tasks
     
     [] Edit
-    -- [] Edit status
+    -- [x] Edit status
         -- [] Edit multiple status tasks at once
 
     -- [] Edit content
@@ -32,6 +32,10 @@ const utils = require('./utils');
 // Helpers
 const getAbsolutePath = (filePath) => {
     return path.join(__dirname, filePath);
+}
+const saveTask = (obj) => {
+    const tasksJSON = JSON.stringify(obj, null, 2);
+    fs.writeFileSync(tasksFile, tasksJSON);
 }
 
 // Files to include
@@ -60,6 +64,7 @@ switch (params[0]) {
         utils.showPending(tasks);
         break;
 
+
         // SEARCH
     case 'search':
         if (params[2] === undefined) {
@@ -68,6 +73,14 @@ switch (params[0]) {
         }
         utils.search(tasks, params);
         break;
+
+
+        // EDIT
+    case 'toggle':
+        utils.modifyStatus(tasks, params, saveTask);
+        break;
+
+
 
     default:
         console.log('default');
