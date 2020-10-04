@@ -28,6 +28,7 @@ TODO APP
 const fs = require('fs');
 const path = require('path');
 
+// Helpers
 const getAbsolutePath = (filePath) => {
     return path.join(__dirname, filePath);
 }
@@ -66,6 +67,31 @@ const showPending = () => {
     })
 }
 
+// SEARCH
+// Keywords
+const searchContent = (text) => {
+    let _text = text.toLowerCase();
+    tasks.forEach(task => {
+        let _task = task.name.toLowerCase();
+        if (_task.indexOf(_text) > -1) {
+            let doneText = task.done ? "Done" : "Pending";
+            console.log(`- [${doneText}] ${task.name} (${task.deadline})`);
+        }
+    })
+}
+
+// Date
+const searchDate = (date) => {
+    let _date = date;
+    tasks.forEach(task => {
+        let deadline = task.deadline;
+        if (deadline.indexOf(_date) > -1) {
+            let doneText = task.done ? "Done" : "Pending";
+            console.log(`- [${doneText}] ${task.name} (${task.deadline})`);
+        }
+    })
+}
+
 // Getting params from terminal
 const params = process.argv;
 params.shift();
@@ -84,6 +110,16 @@ switch (params[0]) {
         showPending();
         break;
 
+    case 'search':
+        if (params[2] == '--content') {
+            searchContent(params[1]);
+        } else if (params[2] == '--date') {
+            searchDate(params[1]);
+        } else if (params[2] === undefined) {
+            console.log('You must to pass --content or --date');
+        }
+        break;
+
     default:
-        console.log('');
+        console.log('default');
 }
